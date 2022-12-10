@@ -8,7 +8,7 @@ uses
   Classes, SysUtils;
 
 const
-  Commands: array of string = ('Suspended', 'Fade In', 'Fade Out', 'Fade In Cycle','Fade Out Cycle', 'Fade In Out', 'Fade Out In');
+  kCommands: array of string = ('quit', 'exit');
 
 
 implementation

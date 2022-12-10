@@ -73,6 +73,8 @@ begin
   Application:=TMyShell.Create(nil);
   Application.Title:='My Shell';
   Application.Run;
+  Console.Writeln("bafadadsda");
+  Console.Readln();
   Application.Free;
 end.
 

@@ -28,6 +28,21 @@
         <Filename Value="MyShell.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="myreadline.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MyReadLine"/>
+      </Unit>
+      <Unit>
+        <Filename Value="lexeme.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Lexeme"/>
+      </Unit>
+      <Unit>
+        <Filename Value="lexer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Lexer"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

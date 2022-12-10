@@ -69,12 +69,18 @@ end;
 
 var
   Application: TMyShell;
+  ReadLine: TMyReadLine;
 begin
   Application:=TMyShell.Create(nil);
   Application.Title:='My Shell';
   Application.Run;
-  Writeln('bafadadsda');
-  Readln();
+
+  ReadLine:=TMyReadLine.Create;
+  repeat
+    ReadLine.WritePrompt;
+    ReadLine.ReadLine;
+  until ReadLine.QuitCommandIssued;
+
   Application.Free;
 end.
 

@@ -21,6 +21,7 @@ type
     procedure WritePrompt;
     function ReadLine: string;
     function GetLexemes: TLexemeArray;
+    function QuitCommandIssued: boolean;
   end;
 
 implementation
@@ -52,6 +53,11 @@ procedure TMyReadLine.PushToHistory;
 begin
   SetLength(FHistory, Length(FHistory) + 1);
   FHistory[High(FHistory)] := FCurrentLine;
+end;     
+
+function TMyReadLine.QuitCommandIssued: boolean;
+begin
+  Result := Flexer.IsQuitCommand(FLexer.GetLexemesFromCommand(FCurrentLine));
 end;
 
 end.

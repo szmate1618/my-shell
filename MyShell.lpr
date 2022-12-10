@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}
   Classes, SysUtils, CustApp,
-  MyReadLine, Command
+  MyReadLine, Command, Interpreter
   { you can add units after this };
 
 type
@@ -79,6 +79,7 @@ begin
   repeat
     ReadLine.WritePrompt;
     ReadLine.ReadLine;
+    ReadLine.ExecuteCurrentLine;
   until ReadLine.QuitCommandIssued;
 
   Application.Free;

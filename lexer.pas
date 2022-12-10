@@ -5,7 +5,7 @@ unit Lexer;
 interface
 
 uses
-  Classes, SysUtils, StrUtils,
+  Classes, SysUtils,
   Lexeme, Command;
 
 type
@@ -16,6 +16,7 @@ type
     function GetLexemesFromCommand(const command: string): TLexemeArray;
     function IsQuitCommand(const lexemes: TLexemeArray): boolean;
     function IsCommand(const token: string): boolean;
+    function IsExecutable(const token: string): boolean;
   end;
 
 implementation
@@ -28,14 +29,14 @@ end;
 { Parse a command line string into an array of tokens }
 function TLexer.GetLexemesFromCommand(const command: string): TLexemeArray;
 var
-  delimiters: string = ' \t\r\n';
+  separators: array of char = (' ', #9, #10, #13);
   tokens: array of string;
   token: string;
   lexemes: TLexemeArray = ();
   lexeme: TLexeme;
   quoted: Boolean;  // TODO: Handle quotes.
 begin
-  tokens := SplitString(command, delimiters);
+  tokens := command.Split(separators);  // TODO: Use ExcludeEmpty, AQuoteStart and AQuoteEnd.
 
   { Initialize the array of lexemes }
   SetLength(lexemes, 0);
@@ -49,6 +50,7 @@ begin
     else if lexeme.Value = '>' then lexeme.Kind := tkRedirect
     else if lexeme.Value = '<' then lexeme.Kind := tkRedirect
     else if IsCommand(lexeme.Value) then lexeme.Kind := tkCommand
+    else if IsExecutable(lexeme.Value) then lexeme.Kind := tkExecutable
     else lexeme.Kind := tkUnknown;
 
     { Add the token to the array of lexemes }
@@ -81,6 +83,11 @@ begin
         Break;
       end;
     end;
+end;
+
+function TLexer.IsExecutable(const token: string): boolean;
+begin
+  Result := FileExists(token);
 end;
 
 end.

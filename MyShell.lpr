@@ -79,6 +79,7 @@ begin
   repeat
     ReadLine.WritePrompt;
     ReadLine.ReadLine;
+    ReadLine.ExecuteCurrentLine;
   until ReadLine.QuitCommandIssued;
 
   Application.Free;

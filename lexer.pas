@@ -5,7 +5,7 @@ unit Lexer;
 interface
 
 uses
-  Classes, SysUtils, StrUtils,
+  Classes, SysUtils,
   Lexeme, Command;
 
 type
@@ -29,14 +29,14 @@ end;
 { Parse a command line string into an array of tokens }
 function TLexer.GetLexemesFromCommand(const command: string): TLexemeArray;
 var
-  delimiters: string = ' \t\r\n';
+  separators: array of char = (' ', #9, #10, #13);
   tokens: array of string;
   token: string;
   lexemes: TLexemeArray = ();
   lexeme: TLexeme;
   quoted: Boolean;  // TODO: Handle quotes.
 begin
-  tokens := SplitString(command, delimiters);
+  tokens := command.Split(separators);  // TODO: Use ExcludeEmpty, AQuoteStart and AQuoteEnd.
 
   { Initialize the array of lexemes }
   SetLength(lexemes, 0);

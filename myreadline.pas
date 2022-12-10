@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  Lexeme, Lexer;
+  Lexeme, Lexer, Interpreter;
 
 type
   TMyReadLine = class
@@ -15,6 +15,7 @@ type
     FCurrentLine: string;
     FHistory: array of string;
     FLexer: TLexer;
+    FInterpreter: TInterpreter;
     procedure PushToHistory;
   public
     constructor Create(const Prompt: string = '> ');
@@ -22,6 +23,7 @@ type
     function ReadLine: string;
     function GetLexemes: TLexemeArray;
     function QuitCommandIssued: boolean;
+    procedure ExecuteCurrentLine;
   end;
 
 implementation
@@ -30,6 +32,7 @@ constructor TMyReadLine.Create(const Prompt: string);
 begin
   FPrompt := Prompt;
   FLexer := TLexer.Create;
+  FInterpreter := TInterpreter.Create;
 end;
 
 procedure TMyReadLine.WritePrompt;
@@ -58,6 +61,11 @@ end;
 function TMyReadLine.QuitCommandIssued: boolean;
 begin
   Result := Flexer.IsQuitCommand(FLexer.GetLexemesFromCommand(FCurrentLine));
+end;
+
+procedure TMyReadLine.ExecuteCurrentLine;
+begin
+  FInterpreter.Execute(FLexer.GetLexemesFromCommand(FCurrentLine));
 end;
 
 end.

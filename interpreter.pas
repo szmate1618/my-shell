@@ -46,6 +46,7 @@ begin
   begin
     processes[i].Execute;
   end;
+  // TODO: Free the processes I guess.
 end;
 
 end.

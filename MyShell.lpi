@@ -48,6 +48,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Command"/>
       </Unit>
+      <Unit>
+        <Filename Value="interpreter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Interpreter"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

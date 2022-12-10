@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}
   Classes, SysUtils, CustApp,
-  MyReadLine, Command
+  MyReadLine, Command, Interpreter
   { you can add units after this };
 
 type

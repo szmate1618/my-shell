@@ -16,6 +16,7 @@ type
     function GetLexemesFromCommand(const command: string): TLexemeArray;
     function IsQuitCommand(const lexemes: TLexemeArray): boolean;
     function IsCommand(const token: string): boolean;
+    function IsExecutable(const token: string): boolean;
   end;
 
 implementation
@@ -49,6 +50,7 @@ begin
     else if lexeme.Value = '>' then lexeme.Kind := tkRedirect
     else if lexeme.Value = '<' then lexeme.Kind := tkRedirect
     else if IsCommand(lexeme.Value) then lexeme.Kind := tkCommand
+    else if IsExecutable(lexeme.Value) then lexeme.Kind := tkExecutable
     else lexeme.Kind := tkUnknown;
 
     { Add the token to the array of lexemes }
@@ -81,6 +83,11 @@ begin
         Break;
       end;
     end;
+end;
+
+function TLexer.IsExecutable(const token: string): boolean;
+begin
+  Result := FileExists(token);
 end;
 
 end.

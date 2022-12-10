@@ -6,7 +6,8 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Classes, SysUtils, CustApp
+  Classes, SysUtils, CustApp,
+  MyReadLine
   { you can add units after this };
 
 type

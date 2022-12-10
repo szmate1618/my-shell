@@ -18,7 +18,7 @@ type
     FInterpreter: TInterpreter;
     procedure PushToHistory;
   public
-    constructor Create(const Prompt: string = '> ');
+    constructor Create(const Prompt: string = #27'[31m> '#27'[0m');
     procedure WritePrompt;
     function ReadLine: string;
     function GetLexemes: TLexemeArray;

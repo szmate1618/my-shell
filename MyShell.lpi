@@ -43,6 +43,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Lexer"/>
       </Unit>
+      <Unit>
+        <Filename Value="command.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Command"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}
   Classes, SysUtils, CustApp,
-  MyReadLine
+  MyReadLine, Command
   { you can add units after this };
 
 type
@@ -73,8 +73,8 @@ begin
   Application:=TMyShell.Create(nil);
   Application.Title:='My Shell';
   Application.Run;
-  Console.Writeln("bafadadsda");
-  Console.Readln();
+  Writeln('bafadadsda');
+  Readln();
   Application.Free;
 end.
 

@@ -5,8 +5,8 @@ unit Lexer;
 interface
 
 uses
-  Classes, SysUtils,
-  Lexeme;
+  Classes, SysUtils, StrUtils,
+  Lexeme, Command;
 
 type
   TLexer = class
@@ -14,7 +14,7 @@ type
   public
     constructor Create();
     function GetLexemesFromCommand(const command: string): TLexemeArray;
-    function IsQuitCommand(const tokens: TLexemeArray): boolean;
+    function IsQuitCommand(const lexemes: TLexemeArray): boolean;
   end;
 
 implementation
@@ -27,49 +27,43 @@ end;
 { Parse a command line string into an array of tokens }
 function TLexer.GetLexemesFromCommand(const command: string): TLexemeArray;
 var
-  delimiters: string;
+  delimiters: string = ' \t\r\n';
   tokens: array of string;
   token: string;
-  lexemes: TLexemeArray;
+  lexemes: TLexemeArray = ();
   lexeme: TLexeme;
   quoted: Boolean;  // TODO: Handle quotes.
 begin
-  { Create a regular expression to match pipe/redirect characters }
-  delimiters := ' \t\r\n';
-
-  tokens = SplitString(command, delimiters);
+  tokens := SplitString(command, delimiters);
 
   { Initialize the array of lexemes }
   SetLength(lexemes, 0);
 
   { Split the command line string into tokens using the regular expression }
-  for Lexeme in tokens do
+  for token in tokens do
   begin
-    lexeme :=
-    { Extract the token from the command line string }
-    Lexeme.Value := line.Substring(match.Index, match.Length);
-    case Lexeme.Value of
-      '|': Lexeme.Kind := tkPipe;
-      '>', '<': Lexeme.Kind := tkRedirect;
-    else
-      Lexeme.Kind := tkMacro;
-    end;
+    lexeme.Value := Trim(token);
+
+    if lexeme.Value = '|' then lexeme.Kind := tkPipe
+    else if lexeme.Value = '>' then lexeme.Kind := tkRedirect
+    else if lexeme.Value = '<' then lexeme.Kind := tkRedirect
+    else lexeme.Kind := tkUnknown;
 
     { Add the token to the array of lexemes }
     SetLength(lexemes, Length(lexemes) + 1);
-    tokens[High(lexemes)] := Lexeme;
+    lexemes[High(lexemes)] := lexeme;
 
   end;
 
   { Return the array of tokens }
-  Result := tokens;
+  Result := lexemes;
 end;
 
-function IsQuitCommand(const lexemes: TLexemeArray): boolean;
+function TLexer.IsQuitCommand(const lexemes: TLexemeArray): boolean;
 begin
   // TODO: Think about uppercase-lowercase issues.
-  Result := lexemes[Low(lexemes)].Kind = tkCommand and
-  (lexemes[Low(lexemes)].Value = "quit" or lexemes[Low(lexemes)].Value = "exit");
+  Result := (lexemes[Low(lexemes)].Kind = tkCommand) and
+  ((lexemes[Low(lexemes)].Value = 'quit') or (lexemes[Low(lexemes)].Value = 'exit'));
 end;
 
 end.

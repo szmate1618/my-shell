@@ -14,19 +14,21 @@ type
     FPrompt: string;
     FCurrentLine: string;
     FHistory: array of string;
+    FLexer: TLexer;
     procedure PushToHistory;
   public
-    constructor Create(const Prompt: string);
+    constructor Create(const Prompt: string = '> ');
     procedure WritePrompt;
     function ReadLine: string;
-    function GetTokens: TTokenArray;
+    function GetLexemes: TLexemeArray;
   end;
 
 implementation
 
-constructor TMyReadLine.Create(const Prompt: string = "> ");
+constructor TMyReadLine.Create(const Prompt: string);
 begin
   FPrompt := Prompt;
+  FLexer := TLexer.Create;
 end;
 
 procedure TMyReadLine.WritePrompt;
@@ -41,9 +43,9 @@ begin
   Result := FCurrentLine;
 end;
 
-function TMyReadLine.GetTokens: TArray<string>;
+function TMyReadLine.GetLexemes: TLexemeArray;
 begin
-  Result := FCurrentLine.Split([' ']);
+  Result := FLexer.GetLexemesFromCommand(FCurrentLine);
 end;
 
 procedure TMyReadLine.PushToHistory;

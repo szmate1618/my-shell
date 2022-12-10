@@ -16,7 +16,8 @@ type
     tkArgument,   { An argument lexeme }
     tkPipe,       { A pipe lexeme }
     tkRedirect,   { A redirect lexeme }
-    tkMacro       { A macro lexeme }
+    tkMacro,      { A macro lexeme }
+    tkUnknown     { An unknown lexeme }
   );
 
   { Define a record type for representing command line lexemes }
